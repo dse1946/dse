@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="utf-8" />
+    <title>ΔΣΕ - Ιστορική Διαδρομή</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#2a1212">
+
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.css" />
+    <link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=GFS+Neohellenic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header class="header">
+        <img class="header-badge" src="img/dse-badge.png" alt="Έμβλημα ΔΣΕ">
+        <span>Δημοκρατικός Στρατός Ελλάδας (1946–1949)</span>
+    </header>
+
+    <div id="map"></div>
+
+    <aside class="hud" id="hud">
+        <section class="sheet" data-sheet="context">
+            <button
+                type="button"
+                class="sheet-toggle"
+                aria-expanded="false"
+                aria-controls="sheet-context"
+            >
+                <span class="sheet-title">Ιστορικό πλαίσιο</span>
+                <span class="sheet-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="sheet-fold" id="sheet-context">
+                <div class="sheet-clip">
+                    <div class="sheet-body">
+                    Η ένοπλη σύγκρουση 1946–1949 αποτέλεσε την κορύφωση της μεταπολεμικής πολιτικής κρίσης.
+                    Ο ΔΣΕ συγκρότησε ορεινά μέτωπα, με κύριες επιχειρησιακές ζώνες
+                    στη Μακεδονία, Ήπειρο, Ρούμελη και Πελοπόννησο.
+                    Παρατίθεται διαδραστική απεικόνιση βασικών σταθμών, επιχειρησιακών ζωνών και στρατιωτικών σχηματισμών.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sheet" data-sheet="legend">
+            <button
+                type="button"
+                class="sheet-toggle"
+                aria-expanded="false"
+                aria-controls="sheet-legend"
+            >
+                <span class="sheet-title">Υπόμνημα</span>
+                <span class="sheet-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="sheet-fold" id="sheet-legend">
+                <div class="sheet-clip">
+                    <div class="sheet-body">
+                    <ul class="legend">
+                        <li>
+                            <span class="legend-icon"><span class="legend-zone"></span></span>
+                            <span>Επιχειρησιακή ζώνη</span>
+                        </li>
+                        <li>
+                            <span class="legend-icon"><span class="marker-battle">✖</span></span>
+                            <span>Μάχη</span>
+                        </li>
+                        <li>
+                            <span class="legend-icon"><span class="marker-event"></span></span>
+                            <span>Ιστορικό γεγονός</span>
+                        </li>
+                        <li>
+                            <span class="legend-icon"><span class="marker-hq"></span></span>
+                            <span>Αρχηγείο / Ανεξάρτητο τμήμα</span>
+                        </li>
+                        <li>
+                            <span class="legend-icon"><span class="marker-division"></span></span>
+                            <span>Μεραρχία / Ταξιαρχία</span>
+                        </li>
+                        <li>
+                            <span class="legend-icon"><span class="marker-staff"></span></span>
+                            <span>Επιτελική υπηρεσία</span>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </aside>
+
+    <script src="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
