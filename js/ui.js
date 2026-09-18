@@ -8,15 +8,8 @@
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
-    function applyDefaults() {
-        var isDesktop = desktop.matches;
-        sheets.forEach(function (sheet) {
-            var id = sheet.getAttribute('data-sheet');
-            setOpen(sheet, isDesktop && id !== 'timeline');
-        });
-    }
-
     sheets.forEach(function (sheet) {
+        setOpen(sheet, false);
         sheet.querySelector('.sheet-toggle').addEventListener('click', function () {
             var willOpen = !sheet.classList.contains('is-open');
 
@@ -30,13 +23,6 @@
         });
     });
 
-    if (desktop.addEventListener) {
-        desktop.addEventListener('change', applyDefaults);
-    } else if (desktop.addListener) {
-        desktop.addListener(applyDefaults);
-    }
-
-    applyDefaults();
     initTimeline();
 
     function eventYear(date) {
@@ -46,27 +32,35 @@
 
     function initTimeline() {
         var yearsWrap = document.getElementById('timeline-years');
-        var track = document.getElementById('timeline-track');
-        if (!yearsWrap || !track || typeof timeline === 'undefined') {
+        var list = document.getElementById('timeline-list');
+        if (!yearsWrap || !list || typeof timeline === 'undefined') {
             return;
         }
 
         var years = [];
+        var firstByYear = {};
+
         timeline.forEach(function (item, index) {
             var year = eventYear(item.date);
             if (years.indexOf(year) === -1) {
                 years.push(year);
+                firstByYear[year] = index;
             }
 
-            var card = document.createElement('article');
-            card.className = 'timeline-card';
-            card.dataset.year = year;
-            card.dataset.index = String(index);
-            card.innerHTML =
-                '<time class="timeline-card-date">' + item.date + '</time>' +
-                '<p class="timeline-card-text">' + item.text + '</p>';
-            track.appendChild(card);
+            var entry = document.createElement('article');
+            entry.className = 'timeline-item';
+            entry.dataset.year = year;
+            entry.innerHTML =
+                '<time class="timeline-item-date">' + item.date + '</time>' +
+                '<p class="timeline-item-text">' + item.text + '</p>';
+            list.appendChild(entry);
         });
+
+        function setActiveYear(year) {
+            Array.prototype.forEach.call(yearsWrap.children, function (button) {
+                button.classList.toggle('is-active', button.dataset.year === year);
+            });
+        }
 
         years.forEach(function (year) {
             var button = document.createElement('button');
@@ -75,19 +69,13 @@
             button.textContent = year;
             button.dataset.year = year;
             button.addEventListener('click', function () {
-                var first = track.querySelector('.timeline-card[data-year="' + year + '"]');
-                if (first) {
-                    first.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+                var target = list.children[firstByYear[year]];
+                if (target) {
+                    list.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
                 }
             });
             yearsWrap.appendChild(button);
         });
-
-        function setActiveYear(year) {
-            Array.prototype.forEach.call(yearsWrap.querySelectorAll('.timeline-year'), function (button) {
-                button.classList.toggle('is-active', button.dataset.year === year);
-            });
-        }
 
         if ('IntersectionObserver' in window) {
             var observer = new IntersectionObserver(function (entries) {
@@ -97,12 +85,12 @@
                     }
                 });
             }, {
-                root: track,
-                threshold: 0.6
+                root: list,
+                threshold: 0.4
             });
 
-            Array.prototype.forEach.call(track.querySelectorAll('.timeline-card'), function (card) {
-                observer.observe(card);
+            Array.prototype.forEach.call(list.children, function (item) {
+                observer.observe(item);
             });
         }
 
