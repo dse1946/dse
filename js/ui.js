@@ -62,6 +62,49 @@
             });
         }
 
+        var thumb = document.getElementById('timeline-thumb');
+        var ticking = false;
+
+        function leadingYear() {
+            var edge = list.scrollLeft + 16;
+            var chosen = list.children[0];
+            for (var i = 0; i < list.children.length; i++) {
+                var item = list.children[i];
+                if (item.offsetLeft + item.offsetWidth > edge) {
+                    chosen = item;
+                    break;
+                }
+            }
+            return chosen ? chosen.dataset.year : years[0];
+        }
+
+        function syncThumb() {
+            if (!thumb) {
+                return;
+            }
+            var maxScroll = list.scrollWidth - list.clientWidth;
+            var bar = thumb.parentNode.clientWidth;
+            var thumbWidth = maxScroll <= 0
+                ? bar
+                : Math.max(bar * (list.clientWidth / list.scrollWidth), 36);
+            var maxThumb = Math.max(bar - thumbWidth, 0);
+            var x = maxScroll <= 0 ? 0 : (list.scrollLeft / maxScroll) * maxThumb;
+            thumb.style.width = thumbWidth + 'px';
+            thumb.style.transform = 'translateX(' + x + 'px)';
+        }
+
+        function onScroll() {
+            if (ticking) {
+                return;
+            }
+            ticking = true;
+            requestAnimationFrame(function () {
+                setActiveYear(leadingYear());
+                syncThumb();
+                ticking = false;
+            });
+        }
+
         years.forEach(function (year) {
             var button = document.createElement('button');
             button.type = 'button';
@@ -77,23 +120,13 @@
             yearsWrap.appendChild(button);
         });
 
-        if ('IntersectionObserver' in window) {
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        setActiveYear(entry.target.dataset.year);
-                    }
-                });
-            }, {
-                root: list,
-                threshold: 0.4
-            });
-
-            Array.prototype.forEach.call(list.children, function (item) {
-                observer.observe(item);
-            });
+        list.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        if (typeof ResizeObserver !== 'undefined') {
+            new ResizeObserver(onScroll).observe(list);
         }
 
         setActiveYear(years[0]);
+        syncThumb();
     }
 })();

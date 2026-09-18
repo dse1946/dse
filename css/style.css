@@ -219,6 +219,7 @@ html, body {
 }
 
 .timeline-list {
+    position: relative;
     display: flex;
     gap: 10px;
     height: 8rem;
@@ -228,6 +229,27 @@ html, body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+
+.timeline-list::-webkit-scrollbar {
+    display: none;
+}
+
+.timeline-bar {
+    height: 3px;
+    margin-top: 8px;
+    background: rgba(107, 28, 28, 0.35);
+    border-radius: 3px;
+}
+
+.timeline-thumb {
+    height: 100%;
+    width: 40px;
+    background: linear-gradient(90deg, #7a1a1a, #c43c3c);
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(180, 40, 40, 0.55);
+    will-change: transform;
 }
 
 .timeline-item {
@@ -272,6 +294,21 @@ html, body {
     overflow-y: auto;
     line-height: 1.4;
     font-size: 13px;
+    scrollbar-width: thin;
+    scrollbar-color: #9b2b2b transparent;
+}
+
+.timeline-item-text::-webkit-scrollbar {
+    width: 3px;
+}
+
+.timeline-item-text::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.timeline-item-text::-webkit-scrollbar-thumb {
+    background: #9b2b2b;
+    border-radius: 3px;
 }
 
 .maplibregl-ctrl-top-left {
