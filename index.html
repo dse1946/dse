@@ -84,10 +84,30 @@
                 </div>
             </div>
         </section>
+        <section class="sheet" data-sheet="timeline">
+            <button
+                type="button"
+                class="sheet-toggle"
+                aria-expanded="false"
+                aria-controls="sheet-timeline"
+            >
+                <span class="sheet-title">Χρονικό 1944–1949</span>
+                <span class="sheet-chevron" aria-hidden="true"></span>
+            </button>
+            <div class="sheet-fold" id="sheet-timeline">
+                <div class="sheet-clip">
+                    <div class="sheet-body sheet-body-timeline">
+                        <div class="timeline-years" id="timeline-years"></div>
+                        <div class="timeline-track" id="timeline-track"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </aside>
 
     <script src="https://unpkg.com/maplibre-gl@5.6.1/dist/maplibre-gl.js"></script>
     <script src="js/data.js"></script>
+    <script src="js/timeline.js"></script>
     <script src="js/map.js"></script>
     <script src="js/ui.js"></script>
 </body>

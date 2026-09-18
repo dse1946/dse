@@ -179,6 +179,100 @@ html, body {
     cursor: default;
 }
 
+.sheet-body-timeline {
+    padding: 0 0 12px;
+    max-height: none;
+    overflow: hidden;
+}
+
+.timeline-years {
+    display: flex;
+    gap: 6px;
+    padding: 0 14px 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.timeline-years::-webkit-scrollbar {
+    display: none;
+}
+
+.timeline-year {
+    flex: 0 0 auto;
+    border: 0;
+    background: transparent;
+    color: #b9a88a;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.timeline-year.is-active {
+    color: #c9a227;
+    border-bottom-color: #9b2b2b;
+}
+
+.timeline-track {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 14px;
+    padding: 0 14px 4px;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.timeline-track::-webkit-scrollbar {
+    height: 4px;
+}
+
+.timeline-track::-webkit-scrollbar-thumb {
+    background: #6a1c1c;
+}
+
+.timeline-card {
+    position: relative;
+    flex: 0 0 min(82vw, 300px);
+    scroll-snap-align: start;
+    background: rgba(36, 18, 18, 0.72);
+    border: 1px solid #6a1c1c;
+    border-top: 2px solid #9b2b2b;
+    padding: 10px 12px 12px;
+    min-height: 148px;
+}
+
+.timeline-card::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    background: #c9a227;
+    border-radius: 50%;
+}
+
+.timeline-card-date {
+    display: block;
+    font-family: 'GFS Didot', 'Noto Serif', serif;
+    color: #c9a227;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.timeline-card-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    max-height: 6.9em;
+    overflow-y: auto;
+    color: #e6dcc8;
+}
+
 .maplibregl-ctrl-top-left {
     top: calc(68px + env(safe-area-inset-top));
     left: auto;
